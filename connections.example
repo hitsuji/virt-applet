@@ -1,4 +1,4 @@
-# kvm-applet connections — copy to ~/.config/kvm-applet/connections
+# virt-applet connections — copy to ~/.config/virt-applet/connections
 # One per line:  [name] <libvirt URI>     (name defaults to the hostname)
 # Restart the applet after editing.
 

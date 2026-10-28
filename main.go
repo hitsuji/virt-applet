@@ -1,4 +1,4 @@
-// kvm-applet is a system tray applet for listing and controlling libvirt/QEMU VMs.
+// virt-applet is a system tray applet for listing and controlling libvirt/QEMU VMs.
 package main
 
 import (

@@ -1,4 +1,4 @@
-module kvm-applet
+module virt-applet
 
 go 1.27.1
 

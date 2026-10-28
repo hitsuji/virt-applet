@@ -23,7 +23,7 @@ func defaultConfigPath() string {
 		home, _ := os.UserHomeDir()
 		dir = filepath.Join(home, ".config")
 	}
-	return filepath.Join(dir, "kvm-applet", "connections")
+	return filepath.Join(dir, "virt-applet", "connections")
 }
 
 // loadConfig reads a connections file. Each non-comment line is either

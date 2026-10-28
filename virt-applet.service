@@ -4,7 +4,7 @@ PartOf=graphical-session.target
 After=graphical-session.target
 
 [Service]
-ExecStart=%h/.local/bin/kvm-applet
+ExecStart=%h/.local/bin/virt-applet
 Restart=on-failure
 RestartSec=3
 

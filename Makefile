@@ -1,4 +1,4 @@
-BIN    := kvm-applet
+BIN    := virt-applet
 PREFIX ?= $(HOME)/.local
 
 build:
@@ -6,13 +6,13 @@ build:
 
 install: build
 	install -Dm755 $(BIN) $(PREFIX)/bin/$(BIN)
-	install -Dm644 kvm-applet.service $(HOME)/.config/systemd/user/kvm-applet.service
+	install -Dm644 virt-applet.service $(HOME)/.config/systemd/user/virt-applet.service
 	systemctl --user daemon-reload
-	@echo "Enable at login with: systemctl --user enable --now kvm-applet"
+	@echo "Enable at login with: systemctl --user enable --now virt-applet"
 
 uninstall:
-	-systemctl --user disable --now kvm-applet
-	rm -f $(PREFIX)/bin/$(BIN) $(HOME)/.config/systemd/user/kvm-applet.service
+	-systemctl --user disable --now virt-applet
+	rm -f $(PREFIX)/bin/$(BIN) $(HOME)/.config/systemd/user/virt-applet.service
 
 deb:
 	./build-deb.sh $(VERSION)

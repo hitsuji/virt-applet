@@ -1,4 +1,4 @@
-# kvm-applet
+# virt-applet
 
 A system tray applet for listing and controlling libvirt/QEMU virtual machines
 on the local host and on remote hosts over SSH.
@@ -33,8 +33,8 @@ desktop notifications.
 
 ```sh
 ./build-deb.sh 0.1.0        # or: make deb VERSION=0.1.0
-sudo apt install ./dist/kvm-applet_0.1.0_amd64.deb
-systemctl --user enable --now kvm-applet
+sudo apt install ./dist/virt-applet_0.1.0_amd64.deb
+systemctl --user enable --now virt-applet
 ```
 
 Set `GOARCH` to build for another architecture, e.g.
@@ -44,15 +44,15 @@ Set `GOARCH` to build for another architecture, e.g.
 
 ```sh
 make install                # installs to ~/.local/bin
-systemctl --user enable --now kvm-applet
+systemctl --user enable --now virt-applet
 ```
 
 `make uninstall` removes it again. Building needs Go 1.27 or later.
 
 ## Configuration
 
-Connections are read from `~/.config/kvm-applet/connections` (or
-`$XDG_CONFIG_HOME/kvm-applet/connections`). Each line is a libvirt URI,
+Connections are read from `~/.config/virt-applet/connections` (or
+`$XDG_CONFIG_HOME/virt-applet/connections`). Each line is a libvirt URI,
 optionally preceded by a display name:
 
 ```
@@ -64,7 +64,7 @@ session  qemu:///session
 The name defaults to the URI's hostname, or `local` / `session`. Names must be
 unique. Lines starting with `#` are comments, and `$VARS` in URIs are expanded
 from the environment. See `connections.example` (installed by the package to
-`/usr/share/doc/kvm-applet/examples/connections`). Restart the applet after
+`/usr/share/doc/virt-applet/examples/connections`). Restart the applet after
 editing.
 
 If the file is missing or empty, the applet uses `$LIBVIRT_DEFAULT_URI`, or
@@ -84,7 +84,7 @@ go-libvirt's built-in SSH client is still available as `qemu+libssh://`.
 
 ```
 -uri URI          libvirt URI to manage; repeatable, overrides the config file
--config PATH      connections file (default ~/.config/kvm-applet/connections)
+-config PATH      connections file (default ~/.config/virt-applet/connections)
 -interval DUR     poll / reconnect interval (default 5s)
 ```
 
@@ -93,11 +93,11 @@ go-libvirt's built-in SSH client is still available as `qemu+libssh://`.
 When run as a systemd user service:
 
 ```sh
-journalctl --user -u kvm-applet -f
+journalctl --user -u virt-applet -f
 ```
 
 ## Licence
 
 MIT; see [LICENSE](LICENSE). The binary includes third-party Go modules under
 Apache-2.0 and BSD licences; the Debian package lists them in
-`/usr/share/doc/kvm-applet/copyright`.
+`/usr/share/doc/virt-applet/copyright`.
