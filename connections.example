@@ -1,0 +1,14 @@
+# kvm-applet connections — copy to ~/.config/kvm-applet/connections
+# One per line:  [name] <libvirt URI>     (name defaults to the hostname)
+# Restart the applet after editing.
+
+local   qemu:///system
+
+# Remote over ssh. Uses your system ssh, so ~/.ssh/config aliases, keys and
+# ProxyJump all apply. Key/agent auth is required (no password prompts).
+#nas    qemu+ssh://admin@nas.lan/system
+#nas    qemu+ssh://nas/system                     # using a ~/.ssh/config alias
+#nas    qemu+ssh://admin@nas.lan:2222/system?keyfile=/home/me/.ssh/nas_ed25519
+
+# Your per-user VMs (virt-manager's "QEMU/KVM User session").
+#session qemu:///session
