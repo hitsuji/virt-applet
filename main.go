@@ -168,6 +168,7 @@ type vmRef struct {
 type app struct {
 	conns   []*conn
 	updates chan update
+	reset   chan struct{} // forces a full menu rebuild
 	cancel  context.CancelFunc
 
 	menus  map[string]*vmMenu
@@ -179,7 +180,7 @@ type app struct {
 }
 
 func newApp(cfgs []connConfig, interval time.Duration) *app {
-	a := &app{updates: make(chan update)}
+	a := &app{updates: make(chan update), reset: make(chan struct{}, 1)}
 	for _, cfg := range cfgs {
 		a.conns = append(a.conns, &conn{connConfig: cfg, client: NewClient(cfg.URI, interval)})
 	}
@@ -201,11 +202,30 @@ func (a *app) onReady() {
 		}()
 	}
 	go func() {
-		for u := range a.updates {
-			u.c.snap, u.c.seen = u.snap, true
+		for {
+			select {
+			case u := <-a.updates:
+				u.c.snap, u.c.seen = u.snap, true
+			case <-a.reset:
+				a.menus = nil
+			}
 			a.render()
 		}
 	}()
+
+	// Rebuild once a new tray host has had time to fetch the menu, replacing
+	// any submenus it failed to populate.
+	err := watchTrayHosts(ctx, func() {
+		time.AfterFunc(time.Second, func() {
+			select {
+			case a.reset <- struct{}{}:
+			default:
+			}
+		})
+	})
+	if err != nil {
+		log.Printf("not watching for tray hosts: %v", err)
+	}
 }
 
 func (a *app) onExit() {
